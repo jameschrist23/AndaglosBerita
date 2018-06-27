@@ -8,25 +8,26 @@ import {
   TouchableOpacity
 } from 'react-native';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { setNews } from './store/actions';
 
 class HomeScreen extends Component {
   constructor(props){
     super(props)
-    this.state = {
-      news: []
-    }
   }
 
   componentDidMount() {
     axios.get(
       'https://newsapi.org/v2/everything?q=bitcoin&sortBy=publishedAt&apiKey=7ccd8b41c3df47d49c830132fca0df90'
-    ).then((res) => this.setState({ news: res.data.articles})).catch(err => console.log(err))
+    ).then((res) => this.props.setNews(res.data.articles)).catch(err => console.log(err))
   }
 
   render() {
+    console.log(this.props)
     return (
         <FlatList
-          data={this.state.news}
+          data={this.props.redux.news}
           renderItem={({item}) => {
             return (
                 <TouchableOpacity
@@ -51,7 +52,16 @@ class HomeScreen extends Component {
     );
   }
 }
-export default HomeScreen;
+
+const mapStateToProps = (state) => {
+  return {
+    redux: state
+  }
+}
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({setNews}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
 
 const styles = StyleSheet.create({
   container: {

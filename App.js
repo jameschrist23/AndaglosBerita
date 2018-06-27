@@ -10,11 +10,15 @@ import {
 import { createStackNavigator } from 'react-navigation';
 import HomeScreen from './HomeScreen';
 import DetailScreen from './DetailScreen';
+import { Provider } from 'react-redux'
+import store from './store'
 
 class App extends Component {
   render() {
     return (
-      <AppStackNavigator/>
+      <Provider store={store}>
+        <AppStackNavigator/>
+      </Provider>
     )
   }
 }

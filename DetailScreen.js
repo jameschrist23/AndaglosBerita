@@ -6,6 +6,7 @@ import {
     StyleSheet,
     Image
     } from 'react-native';
+import { connect } from 'react-redux'
 
 class DetailScreen extends Component {
     /*constructor(props){
@@ -30,7 +31,14 @@ class DetailScreen extends Component {
         );
     }
 }
-export default DetailScreen;
+
+const mapStateToProps = (state) => {
+    return {
+        redux: state
+    }
+}
+
+export default connect(mapStateToProps)(DetailScreen);
 
 const styles = StyleSheet.create({
     container: {
